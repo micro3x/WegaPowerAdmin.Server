@@ -1,0 +1,22 @@
+<nav class="navbar navbar-default">
+    <div class="container-fluid">
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav">
+                <li> <!-- [ngClass]="current == 'Home' ? 'active':'not-active'"> -->
+                    <a (click)="home()">Home</a>
+                </li>
+                <li><!-- [ngClass]="current == 'Users' ? 'active' : 'not'">-->
+                    <a (click)="users()">Users</a>
+                </li>
+                <li><!-- [ngClass]="current == 'Logout' ? 'active' : 'not'"> -->
+                    <a (click)="logout()">Logout</a>
+                </li>
+            </ul>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container-fluid -->
+</nav>
+<div class="row">
+    <!-- <router-outlet></router-outlet> -->
+</div>
