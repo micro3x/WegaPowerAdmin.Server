@@ -1,0 +1,15 @@
+<nav class="navbar navbar-default">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <a class="navbar-brand" href="#">
+              <img alt="Brand" src="img/logo_web.png" width="20">
+            </a>
+        </div>
+        <ul class="nav navbar-nav">
+            <li *ngFor="let navItem of navLinks">
+                <a [routerLink]="[navItem.path]">{{navItem.title}}</a>
+            </li>
+        </ul>
+        <p class="navbar-text navbar-right">Signed in as <a href="#" class="navbar-link">{{currentUser.username}}</a></p>
+    </div>
+</nav>

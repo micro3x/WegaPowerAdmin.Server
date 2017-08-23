@@ -2,20 +2,20 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
-
+//Main App Components
 import { AppComponent } from './app.component';
 import { routing } from './app.routing';
 import { AppSettings } from './app.settings';
-// custom modules
-import { HomeModule } from './home/index'
-
-
+//Custom modules
+import { UserAdminModule } from './userAdmin/user.admin.module';
+//Guards
 import { AuthGuard, RoleGuard } from './_guards/index';
-
+//Components
 import { AlertComponent } from './_directives/index';
 import { LoginComponent } from './login/index';
-
-import { AlertService, AuthenticationService, RestService } from './_services/index';
+import { HomeComponent, NavMenu } from './home/index';
+//Services
+import { AlertService, AuthenticationService, RestService, UserService } from './_services/index';
 
 
 @NgModule({
@@ -24,16 +24,14 @@ import { AlertService, AuthenticationService, RestService } from './_services/in
     FormsModule,
     HttpModule,
     routing,
-    HomeModule
+    UserAdminModule
   ],
   declarations: [
     AppComponent,
     AlertComponent,
     LoginComponent,
-    // HomeComponent,
-    // UserAdminComponent,
-    // EditUserForm,
-    // NewUserForm
+    HomeComponent,
+    NavMenu
   ],
   providers: [
     AppSettings,
@@ -41,8 +39,9 @@ import { AlertService, AuthenticationService, RestService } from './_services/in
     AuthenticationService,
     RestService,
     AuthGuard,
-    RoleGuard
+    RoleGuard,
+    UserService
   ],
-  bootstrap: [AppComponent]
+  bootstrap: [ AppComponent ]
 })
 export class AppModule { }

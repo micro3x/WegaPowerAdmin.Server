@@ -3,12 +3,16 @@ import { Http, Headers, Response } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/map'
 import { AppSettings } from '../app.settings'
+import { User } from '../models/index'
 
 @Injectable()
 export class AuthenticationService {
     headers = new Headers();
+    currentUser: User;
 
-    constructor(private http: Http, private appSettings: AppSettings) {
+    constructor(private http: Http,
+        private appSettings: AppSettings
+    ) {
         this.headers.append("X-Parse-Application-Id", appSettings.appId);
     }
 
@@ -20,8 +24,13 @@ export class AuthenticationService {
                 let user = response.json();
                 if (user && user.sessionToken) {
                     // store user details and jwt token in local storage to keep user logged in between page refreshes
+                    this.currentUser = user as User;
+                    
                     localStorage.setItem('currentUser', JSON.stringify(user));
+
+                    return user;
                 }
+                return null;
             });
     }
 

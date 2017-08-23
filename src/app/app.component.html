@@ -1,9 +1,12 @@
-<div class="jumbotron">
+<div class="">
     <div class="container">
-        <div class="center">
-            <h1>{{name}}</h1>
-        </div>
         <div class="col-sm-8 col-sm-offset-2">
+            <div class="center">
+                <h1>{{name}}</h1>
+            </div>
+            <div *ngIf="currentUser">
+                <nav-menu [currentUser]="currentUser"></nav-menu>
+            </div>
             <alert></alert>
             <router-outlet></router-outlet>
             <!-- <router-outlet name="main"></router-outlet> -->

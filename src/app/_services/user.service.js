@@ -6,21 +6,19 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
 var core_1 = require("@angular/core");
-var home_component_1 = require("./home.component");
-var HomeModule = (function () {
-    function HomeModule() {
+var Subject_1 = require("rxjs/Subject");
+var UserService = (function () {
+    function UserService() {
+        this.loggedUser = new Subject_1.Subject();
+        this.currentUser = this.loggedUser.asObservable();
     }
-    return HomeModule;
+    UserService.prototype.userLogin = function (user) {
+        this.loggedUser.next(user);
+    };
+    return UserService;
 }());
-HomeModule = __decorate([
-    core_1.NgModule({
-        imports: [],
-        declarations: [
-            home_component_1.HomeComponent
-        ],
-        providers: [],
-        bootstrap: [home_component_1.HomeComponent]
-    })
-], HomeModule);
-exports.HomeModule = HomeModule;
-//# sourceMappingURL=home.module.js.map
+UserService = __decorate([
+    core_1.Injectable()
+], UserService);
+exports.UserService = UserService;
+//# sourceMappingURL=user.service.js.map

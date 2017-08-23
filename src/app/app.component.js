@@ -14,10 +14,15 @@ var index_1 = require("./_services/index");
 var AppComponent = (function () {
     function AppComponent(
         // private route: ActivatedRoute,
-        router, alertService) {
+        router, alertService, userService) {
+        var _this = this;
         this.router = router;
         this.alertService = alertService;
-        this.name = 'WegaPower Administration Module';
+        this.userService = userService;
+        this.name = 'WegaPower Administration';
+        this.userService.currentUser.subscribe(function (userData) {
+            _this.currentUser = userData;
+        });
     }
     return AppComponent;
 }());
@@ -27,7 +32,8 @@ AppComponent = __decorate([
         templateUrl: './app.component.html'
     }),
     __metadata("design:paramtypes", [router_1.Router,
-        index_1.AlertService])
+        index_1.AlertService,
+        index_1.UserService])
 ], AppComponent);
 exports.AppComponent = AppComponent;
 //# sourceMappingURL=app.component.js.map

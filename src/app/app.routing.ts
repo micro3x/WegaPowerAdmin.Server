@@ -1,14 +1,14 @@
 import { Routes, RouterModule } from '@angular/router';
 
-import { HomeModule } from './home/index';
+import { HomeComponent } from './home/home.component';
 import { LoginComponent } from './login/index';
 import { AuthGuard, RoleGuard } from './_guards/index';
-// import { UserAdminComponent } from './home/userAdmin/index'
+import { UserAdminComponent } from './userAdmin/user.admin.component';
 
 const appRoutes: Routes = [
     {
         path: '',
-        component: HomeModule,
+        component: HomeComponent,
         canActivate: [AuthGuard]
         // children: [
         //     { path: 'useradmin', outlet: 'main', component: UserAdminComponent, canActivate: [RoleGuard] }
@@ -16,12 +16,17 @@ const appRoutes: Routes = [
     },
     {
         path: 'home',
-        component: HomeModule,
+        component: HomeComponent,
         canActivate: [AuthGuard],
         children: [
             // {path:'',redirectTo:'home', pathMatch: 'full'},
             // { path: 'useradmin', component: UserAdminComponent, canActivate: [RoleGuard] }
         ]
+    },
+    {
+        path: 'useradmin',
+        component: UserAdminComponent,
+        canActivate: [RoleGuard]
     },
     // { path: 'useradmin', outlet: 'main', component: UserAdminComponent, canActivate: [RoleGuard] },
     { path: 'login', component: LoginComponent },

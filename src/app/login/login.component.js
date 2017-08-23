@@ -12,11 +12,12 @@ var core_1 = require("@angular/core");
 var router_1 = require("@angular/router");
 var index_1 = require("../_services/index");
 var LoginComponent = (function () {
-    function LoginComponent(route, router, authenticationService, alertService) {
+    function LoginComponent(route, router, authenticationService, alertService, userService) {
         this.route = route;
         this.router = router;
         this.authenticationService = authenticationService;
         this.alertService = alertService;
+        this.userService = userService;
         this.model = {};
         this.loading = false;
     }
@@ -31,6 +32,7 @@ var LoginComponent = (function () {
         this.loading = true;
         this.authenticationService.login(this.model.username, this.model.password)
             .subscribe(function (data) {
+            _this.userService.userLogin(data);
             _this.router.navigate([_this.returnUrl]);
         }, function (error) {
             _this.alertService.error(JSON.parse(error._body).error);
@@ -47,7 +49,8 @@ LoginComponent = __decorate([
     __metadata("design:paramtypes", [router_1.ActivatedRoute,
         router_1.Router,
         index_1.AuthenticationService,
-        index_1.AlertService])
+        index_1.AlertService,
+        index_1.UserService])
 ], LoginComponent);
 exports.LoginComponent = LoginComponent;
 //# sourceMappingURL=login.component.js.map

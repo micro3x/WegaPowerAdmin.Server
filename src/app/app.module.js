@@ -9,14 +9,19 @@ var core_1 = require("@angular/core");
 var platform_browser_1 = require("@angular/platform-browser");
 var forms_1 = require("@angular/forms");
 var http_1 = require("@angular/http");
+//Main App Components
 var app_component_1 = require("./app.component");
 var app_routing_1 = require("./app.routing");
 var app_settings_1 = require("./app.settings");
-// custom modules
-var index_1 = require("./home/index");
-var index_2 = require("./_guards/index");
-var index_3 = require("./_directives/index");
-var index_4 = require("./login/index");
+//Custom modules
+var user_admin_module_1 = require("./userAdmin/user.admin.module");
+//Guards
+var index_1 = require("./_guards/index");
+//Components
+var index_2 = require("./_directives/index");
+var index_3 = require("./login/index");
+var index_4 = require("./home/index");
+//Services
 var index_5 = require("./_services/index");
 var AppModule = (function () {
     function AppModule() {
@@ -30,20 +35,23 @@ AppModule = __decorate([
             forms_1.FormsModule,
             http_1.HttpModule,
             app_routing_1.routing,
-            index_1.HomeModule
+            user_admin_module_1.UserAdminModule
         ],
         declarations: [
             app_component_1.AppComponent,
-            index_3.AlertComponent,
-            index_4.LoginComponent,
+            index_2.AlertComponent,
+            index_3.LoginComponent,
+            index_4.HomeComponent,
+            index_4.NavMenu
         ],
         providers: [
             app_settings_1.AppSettings,
             index_5.AlertService,
             index_5.AuthenticationService,
             index_5.RestService,
-            index_2.AuthGuard,
-            index_2.RoleGuard
+            index_1.AuthGuard,
+            index_1.RoleGuard,
+            index_5.UserService
         ],
         bootstrap: [app_component_1.AppComponent]
     })

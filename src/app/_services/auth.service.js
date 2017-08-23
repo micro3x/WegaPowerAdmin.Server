@@ -20,14 +20,18 @@ var AuthenticationService = (function () {
         this.headers.append("X-Parse-Application-Id", appSettings.appId);
     }
     AuthenticationService.prototype.login = function (username, password) {
+        var _this = this;
         return this.http.get(this.appSettings.basePath + "login?username=" + username + "&password=" + password, { headers: this.headers })
             .map(function (response) {
             // login successful if there's a jwt token in the response
             var user = response.json();
             if (user && user.sessionToken) {
                 // store user details and jwt token in local storage to keep user logged in between page refreshes
+                _this.currentUser = user;
                 localStorage.setItem('currentUser', JSON.stringify(user));
+                return user;
             }
+            return null;
         });
     };
     AuthenticationService.prototype.logout = function () {
@@ -38,7 +42,8 @@ var AuthenticationService = (function () {
 }());
 AuthenticationService = __decorate([
     core_1.Injectable(),
-    __metadata("design:paramtypes", [http_1.Http, app_settings_1.AppSettings])
+    __metadata("design:paramtypes", [http_1.Http,
+        app_settings_1.AppSettings])
 ], AuthenticationService);
 exports.AuthenticationService = AuthenticationService;
 //# sourceMappingURL=auth.service.js.map
