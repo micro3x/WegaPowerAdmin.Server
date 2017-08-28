@@ -10,24 +10,32 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 var core_1 = require("@angular/core");
 var router_1 = require("@angular/router");
+var shared_service_1 = require("../_services/shared.service");
 var AuthGuard = (function () {
-    function AuthGuard(router) {
+    function AuthGuard(router, sharedService) {
+        var _this = this;
         this.router = router;
+        this.sharedService = sharedService;
+        this.sharedService.currentUser.subscribe(function (user) {
+            _this.currentUser = user;
+        });
     }
     AuthGuard.prototype.canActivate = function (route, state) {
-        if (localStorage.getItem('currentUser')) {
-            // logged in so return true
-            return true;
-        }
+        return this.sharedService.currentUser.map(function (user) {
+            if (user.sessionToken) {
+                return true;
+            }
+        }).first();
         // not logged in so redirect to login page with the return url
-        this.router.navigate(['/login'], { queryParams: { returnUrl: state.url } });
-        return false;
+        // this.router.navigate(['/login'], { queryParams: { returnUrl: state.url } });
+        // return false;
     };
     return AuthGuard;
 }());
 AuthGuard = __decorate([
     core_1.Injectable(),
-    __metadata("design:paramtypes", [router_1.Router])
+    __metadata("design:paramtypes", [router_1.Router,
+        shared_service_1.SharedService])
 ], AuthGuard);
 exports.AuthGuard = AuthGuard;
 //# sourceMappingURL=auth.guard.js.map

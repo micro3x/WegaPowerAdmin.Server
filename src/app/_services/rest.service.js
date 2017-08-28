@@ -12,15 +12,20 @@ var core_1 = require("@angular/core");
 var http_1 = require("@angular/http");
 require("rxjs/add/operator/map");
 var app_settings_1 = require("../app.settings");
+var shared_service_1 = require("./shared.service");
 var RestService = (function () {
     //'ContentType': 'application/json'
-    function RestService(http, appSettings) {
+    function RestService(http, appSettings, sharedService) {
+        var _this = this;
         this.http = http;
         this.appSettings = appSettings;
+        this.sharedService = sharedService;
         this.headers = new http_1.Headers();
         this.headers.append("X-Parse-Application-Id", appSettings.appId);
         this.baseUrl = appSettings.basePath;
-        this.sessionToken = JSON.parse(localStorage.getItem("currentUser")).sessionToken;
+        this.sharedService.currentUser.subscribe(function (user) {
+            _this.sessionToken = user.sessionToken;
+        });
         this.headers.append("X-Parse-Session-Token", this.sessionToken);
     }
     RestService.prototype.get = function (path, queryString) {
@@ -42,7 +47,9 @@ var RestService = (function () {
 }());
 RestService = __decorate([
     core_1.Injectable(),
-    __metadata("design:paramtypes", [http_1.Http, app_settings_1.AppSettings])
+    __metadata("design:paramtypes", [http_1.Http,
+        app_settings_1.AppSettings,
+        shared_service_1.SharedService])
 ], RestService);
 exports.RestService = RestService;
 //# sourceMappingURL=rest.service.js.map

@@ -5,5 +5,5 @@ function __export(m) {
 __export(require("./alert.service"));
 __export(require("./auth.service"));
 __export(require("./rest.service"));
-__export(require("./user.service"));
+__export(require("./shared.service"));
 //# sourceMappingURL=index.js.map

@@ -1,9 +1,10 @@
 import { Injectable } from '@angular/core';
 import { Http, Headers, Response } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
-import 'rxjs/add/operator/map'
-import { AppSettings } from '../app.settings'
-import { User } from '../models/index'
+import 'rxjs/add/operator/map';
+import { AppSettings } from '../app.settings';
+import { User } from '../models/index';
+import { SharedService } from './shared.service';
 
 @Injectable()
 export class AuthenticationService {
@@ -11,7 +12,8 @@ export class AuthenticationService {
     currentUser: User;
 
     constructor(private http: Http,
-        private appSettings: AppSettings
+        private appSettings: AppSettings,
+        private sharedService : SharedService
     ) {
         this.headers.append("X-Parse-Application-Id", appSettings.appId);
     }
@@ -25,17 +27,12 @@ export class AuthenticationService {
                 if (user && user.sessionToken) {
                     // store user details and jwt token in local storage to keep user logged in between page refreshes
                     this.currentUser = user as User;
-                    
-                    localStorage.setItem('currentUser', JSON.stringify(user));
-
-                    return user;
+                    this.sharedService.userLogin(this.currentUser);
                 }
-                return null;
             });
     }
 
     logout() {
-        // remove user from local storage to log user out
-        localStorage.removeItem('currentUser');
+        this.sharedService.userLogout();
     }
 }

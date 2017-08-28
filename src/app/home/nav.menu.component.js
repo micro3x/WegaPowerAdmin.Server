@@ -9,17 +9,23 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 var core_1 = require("@angular/core");
+var router_1 = require("@angular/router");
 var index_1 = require("../models/index");
 var index_2 = require("../_services/index");
 var NavMenu = (function () {
-    function NavMenu(authenticationService) {
+    function NavMenu(authenticationService, router) {
         this.authenticationService = authenticationService;
+        this.router = router;
         this.navLinks = [
             { title: "Home", path: "/" },
             { title: "Reports", path: "/" },
             { title: "Users", path: "/useradmin" },
         ];
     }
+    NavMenu.prototype.userLogout = function () {
+        this.authenticationService.logout();
+        this.router.navigate(['/login']);
+    };
     NavMenu.prototype.ngOnInit = function () {
         // this.currentUser = this.authenticationService.currentUser;
     };
@@ -34,7 +40,8 @@ NavMenu = __decorate([
         selector: 'nav-menu',
         templateUrl: './nav.menu.component.html'
     }),
-    __metadata("design:paramtypes", [index_2.AuthenticationService])
+    __metadata("design:paramtypes", [index_2.AuthenticationService,
+        router_1.Router])
 ], NavMenu);
 exports.NavMenu = NavMenu;
 //# sourceMappingURL=nav.menu.component.js.map

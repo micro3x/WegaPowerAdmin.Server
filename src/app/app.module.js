@@ -51,7 +51,8 @@ AppModule = __decorate([
             index_5.RestService,
             index_1.AuthGuard,
             index_1.RoleGuard,
-            index_5.UserService
+            index_5.SharedService,
+            { provide: core_1.APP_INITIALIZER, useFactory: function (config) { return function () { return config.currentUser; }; }, deps: [index_5.SharedService], multi: true }
         ],
         bootstrap: [app_component_1.AppComponent]
     })

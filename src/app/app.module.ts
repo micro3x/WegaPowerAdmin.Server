@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { NgModule, APP_INITIALIZER } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
@@ -15,7 +15,7 @@ import { AlertComponent } from './_directives/index';
 import { LoginComponent } from './login/index';
 import { HomeComponent, NavMenu } from './home/index';
 //Services
-import { AlertService, AuthenticationService, RestService, UserService } from './_services/index';
+import { AlertService, AuthenticationService, RestService, SharedService } from './_services/index';
 
 
 @NgModule({
@@ -40,7 +40,8 @@ import { AlertService, AuthenticationService, RestService, UserService } from '.
     RestService,
     AuthGuard,
     RoleGuard,
-    UserService
+    SharedService,
+    { provide: APP_INITIALIZER, useFactory: (config: SharedService) => () => config.currentUser, deps: [SharedService], multi: true }
   ],
   bootstrap: [ AppComponent ]
 })

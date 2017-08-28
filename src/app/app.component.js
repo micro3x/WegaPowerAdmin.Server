@@ -33,7 +33,7 @@ AppComponent = __decorate([
     }),
     __metadata("design:paramtypes", [router_1.Router,
         index_1.AlertService,
-        index_1.UserService])
+        index_1.SharedService])
 ], AppComponent);
 exports.AppComponent = AppComponent;
 //# sourceMappingURL=app.component.js.map

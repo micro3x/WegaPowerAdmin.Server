@@ -1,8 +1,9 @@
-import { Injectable } from '@angular/core';
+import { Injectable, Inject } from '@angular/core';
 import { Http, Headers, Response } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
-import 'rxjs/add/operator/map'
-import { AppSettings } from '../app.settings'
+import 'rxjs/add/operator/map';
+import { AppSettings } from '../app.settings';
+import { SharedService } from './shared.service';
 
 @Injectable()
 export class RestService {
@@ -12,10 +13,17 @@ export class RestService {
 
     //'ContentType': 'application/json'
 
-    constructor(private http: Http, private appSettings: AppSettings) {
+    constructor(
+        private http: Http,
+        private appSettings: AppSettings,
+        private sharedService: SharedService) {
         this.headers.append("X-Parse-Application-Id", appSettings.appId);
         this.baseUrl = appSettings.basePath;
-        this.sessionToken = JSON.parse(localStorage.getItem("currentUser")).sessionToken;
+        this.sharedService.currentUser.subscribe(
+            user => {
+                this.sessionToken = user.sessionToken;
+            }
+        )
         this.headers.append("X-Parse-Session-Token", this.sessionToken);
     }
 

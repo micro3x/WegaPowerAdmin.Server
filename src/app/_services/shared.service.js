@@ -15,10 +15,13 @@ var SharedService = (function () {
     SharedService.prototype.userLogin = function (user) {
         this.loggedUser.next(user);
     };
+    SharedService.prototype.userLogout = function () {
+        this.loggedUser.next();
+    };
     return SharedService;
 }());
 SharedService = __decorate([
     core_1.Injectable()
 ], SharedService);
 exports.SharedService = SharedService;
-//# sourceMappingURL=user.service.js.map
+//# sourceMappingURL=shared.service.js.map

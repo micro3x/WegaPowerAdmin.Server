@@ -12,10 +12,12 @@ var core_1 = require("@angular/core");
 var http_1 = require("@angular/http");
 require("rxjs/add/operator/map");
 var app_settings_1 = require("../app.settings");
+var shared_service_1 = require("./shared.service");
 var AuthenticationService = (function () {
-    function AuthenticationService(http, appSettings) {
+    function AuthenticationService(http, appSettings, sharedService) {
         this.http = http;
         this.appSettings = appSettings;
+        this.sharedService = sharedService;
         this.headers = new http_1.Headers();
         this.headers.append("X-Parse-Application-Id", appSettings.appId);
     }
@@ -28,22 +30,20 @@ var AuthenticationService = (function () {
             if (user && user.sessionToken) {
                 // store user details and jwt token in local storage to keep user logged in between page refreshes
                 _this.currentUser = user;
-                localStorage.setItem('currentUser', JSON.stringify(user));
-                return user;
+                _this.sharedService.userLogin(_this.currentUser);
             }
-            return null;
         });
     };
     AuthenticationService.prototype.logout = function () {
-        // remove user from local storage to log user out
-        localStorage.removeItem('currentUser');
+        this.sharedService.userLogout();
     };
     return AuthenticationService;
 }());
 AuthenticationService = __decorate([
     core_1.Injectable(),
     __metadata("design:paramtypes", [http_1.Http,
-        app_settings_1.AppSettings])
+        app_settings_1.AppSettings,
+        shared_service_1.SharedService])
 ], AuthenticationService);
 exports.AuthenticationService = AuthenticationService;
 //# sourceMappingURL=auth.service.js.map

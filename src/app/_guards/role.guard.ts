@@ -1,19 +1,44 @@
 import { Injectable } from '@angular/core';
 import { Router, CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
+import { SharedService } from '../_services/shared.service';
+import { Observable } from 'rxjs/Observable';
+import 'rxjs/add/operator/map';
+import { Subject } from 'rxjs/Subject';
 
 @Injectable()
 export class RoleGuard implements CanActivate {
 
-    constructor(private router: Router) { }
+    private currentUser: any;
 
-    canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
-        if (localStorage.getItem('currentUser')) {
-            // logged in so return true
-            return true;
-        }
+    constructor(
+        private router: Router,
+        private sharedService: SharedService
+    ) {
+        this.sharedService.currentUser.subscribe(
+            user => {
+                this.currentUser = user;
+            }
+        )
+    }
 
-        // not logged in so redirect to login page with the return url
-        this.router.navigate(['/login'], { queryParams: { returnUrl: state.url }});
-        return false;
+    canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean> {
+
+        return this.sharedService.currentUser.map(
+            user => {
+                if (user.sessionToken) {
+                    return true;
+                }
+            }
+        ).first();
+        // return subject.asObservable();
+
+        // if (this.currentUser) {
+        //     // logged in so return true
+        //     return true;
+        // }
+
+        // // not logged in so redirect to login page with the return url
+        // this.router.navigate(['/login'], { queryParams: { returnUrl: state.url } });
+        // return false;
     }
 }
