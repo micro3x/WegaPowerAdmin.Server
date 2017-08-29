@@ -5,20 +5,18 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
 var core_1 = require("@angular/core");
-var Subject_1 = require("rxjs/Subject");
-var SharedService = (function () {
-    function SharedService() {
-        this.loggedUser = new Subject_1.Subject();
-        this.currentUser = this.loggedUser.asObservable();
+var UserService = (function () {
+    function UserService() {
     }
-    SharedService.prototype.userLogin = function (user) {
-        this.loggedUser.next(user);
-    };
-    return SharedService;
+    return UserService;
 }());
-SharedService = __decorate([
-    core_1.Injectable()
-], SharedService);
-exports.SharedService = SharedService;
+UserService = __decorate([
+    core_1.Injectable(),
+    __metadata("design:paramtypes", [])
+], UserService);
+exports.UserService = UserService;
 //# sourceMappingURL=user.service.js.map

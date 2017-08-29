@@ -21,11 +21,22 @@ var AuthGuard = (function () {
         });
     }
     AuthGuard.prototype.canActivate = function (route, state) {
-        return this.sharedService.currentUser.map(function (user) {
-            if (user.sessionToken) {
-                return true;
-            }
-        }).first();
+        if (this.currentUser) {
+            return true;
+        }
+        this.router.navigate(['/login'], { queryParams: { returnUrl: state.url } });
+        return false;
+        // return this.sharedService.currentUser.map(
+        //     user => {
+        //         if (user) {
+        //             if (user.sessionToken) {
+        //                 return true;
+        //             }
+        //         } else {
+        //             return false;
+        //         }
+        //     }
+        // );
         // not logged in so redirect to login page with the return url
         // this.router.navigate(['/login'], { queryParams: { returnUrl: state.url } });
         // return false;

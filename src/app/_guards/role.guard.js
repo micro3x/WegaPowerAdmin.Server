@@ -14,28 +14,21 @@ var shared_service_1 = require("../_services/shared.service");
 require("rxjs/add/operator/map");
 var RoleGuard = (function () {
     function RoleGuard(router, sharedService) {
+        var _this = this;
         this.router = router;
         this.sharedService = sharedService;
-        // this.sharedService.currentUser.subscribe(
-        //     user => {
-        //         this.currentUser = user;
-        //     }
-        // )
+        this.sharedService.currentUser.subscribe(function (user) {
+            _this.currentUser = user;
+        });
     }
     RoleGuard.prototype.canActivate = function (route, state) {
-        return this.sharedService.currentUser.map(function (user) {
-            if (user.sessionToken) {
-                return true;
-            }
-        }).first();
-        // return subject.asObservable();
-        // if (this.currentUser) {
-        //     // logged in so return true
-        //     return true;
-        // }
-        // // not logged in so redirect to login page with the return url
-        // this.router.navigate(['/login'], { queryParams: { returnUrl: state.url } });
-        // return false;
+        if (this.currentUser) {
+            // logged in so return true
+            return true;
+        }
+        // not logged in so redirect to login page with the return url
+        this.router.navigate(['/login'], { queryParams: { returnUrl: state.url } });
+        return false;
     };
     return RoleGuard;
 }());

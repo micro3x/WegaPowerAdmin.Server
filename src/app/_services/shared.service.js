@@ -6,17 +6,18 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
 var core_1 = require("@angular/core");
-var Subject_1 = require("rxjs/Subject");
+var BehaviorSubject_1 = require("rxjs/BehaviorSubject");
 var SharedService = (function () {
     function SharedService() {
-        this.loggedUser = new Subject_1.Subject();
+        // private loggedUser = new Subject<User>();
+        this.loggedUser = new BehaviorSubject_1.BehaviorSubject(null);
         this.currentUser = this.loggedUser.asObservable();
     }
     SharedService.prototype.userLogin = function (user) {
         this.loggedUser.next(user);
     };
     SharedService.prototype.userLogout = function () {
-        this.loggedUser.next();
+        this.loggedUser.next(null);
     };
     return SharedService;
 }());

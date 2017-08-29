@@ -8,6 +8,7 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var core_1 = require("@angular/core");
 var common_1 = require("@angular/common");
 var user_admin_component_1 = require("./user.admin.component");
+var index_1 = require("../_services/index");
 var UserAdminModule = (function () {
     function UserAdminModule() {
     }
@@ -16,12 +17,14 @@ var UserAdminModule = (function () {
 UserAdminModule = __decorate([
     core_1.NgModule({
         imports: [
-            common_1.CommonModule
+            common_1.CommonModule,
         ],
         declarations: [
             user_admin_component_1.UserAdminComponent
         ],
-        providers: [],
+        providers: [
+            index_1.UserService
+        ],
         exports: [
             user_admin_component_1.UserAdminComponent
         ]

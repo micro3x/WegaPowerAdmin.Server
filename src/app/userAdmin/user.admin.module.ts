@@ -3,14 +3,19 @@ import { CommonModule } from '@angular/common';
 
 import { UserAdminComponent } from './user.admin.component';
 
+import { UserService } from '../_services/index';
+
 @NgModule({
     imports: [
-        CommonModule
+        CommonModule,
+        
     ],
     declarations: [
         UserAdminComponent
     ],
-    providers: [],
+    providers: [
+        UserService
+    ],
     exports: [
         UserAdminComponent
     ]

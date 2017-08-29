@@ -21,24 +21,15 @@ export class RoleGuard implements CanActivate {
         )
     }
 
-    canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean> {
+    canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
 
-        return this.sharedService.currentUser.map(
-            user => {
-                if (user.sessionToken) {
-                    return true;
-                }
-            }
-        ).first();
-        // return subject.asObservable();
+        if (this.currentUser) {
+            // logged in so return true
+            return true;
+        }
 
-        // if (this.currentUser) {
-        //     // logged in so return true
-        //     return true;
-        // }
-
-        // // not logged in so redirect to login page with the return url
-        // this.router.navigate(['/login'], { queryParams: { returnUrl: state.url } });
-        // return false;
+        // not logged in so redirect to login page with the return url
+        this.router.navigate(['/login'], { queryParams: { returnUrl: state.url } });
+        return false;
     }
 }
